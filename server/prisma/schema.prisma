@@ -9,3 +9,57 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id       Int     @id @default(autoincrement())
+  username String  @unique
+  email    String  @unique
+  password String
+  admin    Boolean @default(false)
+  cartId   Int?    @unique
+  cart     Order?  @relation("userCart", fields: [cartId], references: [id])
+  orders   Order[] @relation("userOrders")
+}
+
+model Ingredient {
+  id           Int           @id @default(autoincrement())
+  name         String
+  calories     Int
+  price        Decimal
+  imageUrl     String
+  type         String
+  chimichangas Chimichanga[]
+}
+
+// model ChimichangasOnIngredients {
+//   ingredient Ingredient @relation(fields: [ingredientId], references:[id])
+//   ingredientId Int
+//   chimichanga Chimichanga @relation()
+//   chimichangaId Int
+// }
+
+model Chimichanga {
+  id          Int          @id @default(autoincrement())
+  ingredients Ingredient[]
+  orderId     Int
+  order       Order        @relation(fields: [orderId], references: [id])
+}
+
+model Order {
+  id           Int           @id @default(autoincrement())
+  chimichangas Chimichanga[]
+  userId       Int
+  user         User          @relation("userOrders", fields: [userId], references: [id])
+  userCart     User?         @relation("userCart")
+}
+
+// model OrderEntry {
+//   orderId   Int
+//   productId Int
+//   quantity  Int
+//   price     Decimal
+//   order     Order   @relation(fields: [orderId], references: [id])
+//   product   Product @relation(fields: [productId], references: [id])
+
+//   @@id([orderId, productId])
+// }
