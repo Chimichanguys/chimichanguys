@@ -9,6 +9,6 @@ app.listen(PORT, (err) => {
         console.log(`listening on PORT ${PORT}` )
     }
     else{
-        console.loh(`something went wrong`)
+        console.log(`something went wrong`)
     }
 })
