@@ -1,4 +1,4 @@
-console.log(`database seeded`)
+// console.log(`database seeded`)
 
 
 const { PrismaClient } = require("@prisma/client");
@@ -49,7 +49,7 @@ const main = async () => {
         data: {
             name: "Chicken",
             calories: 700,
-            price: 10,     
+            price: 10,
             imageUrl: "picture of chicken",
             type: "protein"
         }
@@ -58,7 +58,7 @@ const main = async () => {
         data: {
             name: "steak",
             calories: 800,
-            price: 12,     
+            price: 12,
             imageUrl: "picture of steak",
             type: "protein"
         }
@@ -67,7 +67,7 @@ const main = async () => {
         data: {
             name: "white rice",
             calories: 200,
-            price: 0,     
+            price: 0,
             imageUrl: "picture of rice",
             type: "rice"
         }
@@ -76,18 +76,67 @@ const main = async () => {
         data: {
             name: "brown rice",
             calories: 200,
-            price: 0,     
+            price: 0,
             imageUrl: "picture of brown rice",
             type: "rice"
         }
     });
 
-    // const chimichanga1 = await prisma.chimichanga.create({
-    //     data: {
-    //         orderId: order
-    //     }
-    // })
+
+    const order1 = await prisma.order.create({
+        data: {
+            userId: user1.id
+        }
+    });
+
+    const order2 = await prisma.order.create({
+        data: {
+            userId: user3.id
+        }
+    });
+
+
+
+    const chimichanga1 = await prisma.chimichanga.create({
+        data: {
+            orderId: order1.id,
+            ingredients: {
+                connect: [{ id: ingredient1.id }, { id: ingredient2.id }, { id: ingredient3.id }],
+            },
+        }
+    })
+    //order id is what connects the chimis to the order
+
+    const chimichanga2 = await prisma.chimichanga.create({
+        data: {
+            orderId: order1.id,
+            ingredients: {
+                connect: [{ id: ingredient1.id }, { id: ingredient2.id }, { id: ingredient3.id }],
+            },
+        }
+    })
+    const chimichanga3 = await prisma.chimichanga.create({
+        data: {
+            orderId: order2.id,
+            ingredients: {
+                connect: [{ id: ingredient1.id }, { id: ingredient2.id }, { id: ingredient3.id }],
+            },
+        }
+    })
+
+    const orderFilled = await prisma.order.findUnique({
+        where: { id: order1.id },
+        include: {
+            chimichangas: {
+                include: {
+                    ingredients: true
+                }
+            }
+        }
+    })
+    console.log(orderFilled)
 }
+
 
 main();
 
