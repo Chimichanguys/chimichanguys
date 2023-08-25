@@ -124,17 +124,17 @@ const main = async () => {
         }
     })
 
-    const orderFilled = await prisma.order.findUnique({
-        where: { id: order1.id },
-        include: {
-            chimichangas: {
-                include: {
-                    ingredients: true
-                }
-            }
-        }
-    })
-    console.log(orderFilled)
+    // const orderFilled = await prisma.order.findUnique({
+    //     where: { id: order1.id },
+    //     include: {
+    //         chimichangas: {
+    //             include: {
+    //                 ingredients: true
+    //             }
+    //         }
+    //     }
+    // })
+    // console.log(orderFilled)
 }
 
 
