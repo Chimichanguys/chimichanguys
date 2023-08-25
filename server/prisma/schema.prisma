@@ -31,13 +31,6 @@ model Ingredient {
   chimichangas Chimichanga[]
 }
 
-// model ChimichangasOnIngredients {
-//   ingredient Ingredient @relation(fields: [ingredientId], references:[id])
-//   ingredientId Int
-//   chimichanga Chimichanga @relation()
-//   chimichangaId Int
-// }
-
 model Chimichanga {
   id          Int          @id @default(autoincrement())
   ingredients Ingredient[]
@@ -53,13 +46,3 @@ model Order {
   userCart     User?         @relation("userCart")
 }
 
-// model OrderEntry {
-//   orderId   Int
-//   productId Int
-//   quantity  Int
-//   price     Decimal
-//   order     Order   @relation(fields: [orderId], references: [id])
-//   product   Product @relation(fields: [productId], references: [id])
-
-//   @@id([orderId, productId])
-// }
