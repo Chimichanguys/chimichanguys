@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { useState } from 'react'
+import {Routes, Route} from "react-router-dom"
+import Register from './components/Register'
 import Login from './components/login';
-import Dashboard from './components/dashboard';
-import './App.css';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -18,6 +17,8 @@ const App = () => {
     });
 
     const data = await response.json();
+  
+
 
     if (!response.ok) {
       throw new Error(data.message || 'Failed to login');
@@ -48,7 +49,7 @@ const App = () => {
     } else {
         return (
             <Routes>
-                <Route path="/signup" element={<div>SignUp Placeholder</div>} />
+                <Route path="/register" element={<Register />}></Route>
                 <Route path="/*" element={<Login handleLogin={handleLogin} error={error} />} />
             </Routes>
         );
