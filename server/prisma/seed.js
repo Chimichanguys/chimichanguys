@@ -4,14 +4,14 @@
 const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
-
+const bcrypt = require('bcryptjs')
 const main = async () => {
 
     const user1 = await prisma.user.create({
         data: {
             username: "tommy",
             email: "tommy@gmail.com",
-            password: "tommy123",
+            password: await bcrypt.hash("tommy123", 10),
             admin: true
         },
 
@@ -20,7 +20,7 @@ const main = async () => {
         data: {
             username: "mike",
             email: "mike@gmail.com",
-            password: "mike123",
+            password: await bcrypt.hash("mike123", 10),
             admin: true
 
         },
@@ -30,7 +30,7 @@ const main = async () => {
         data: {
             username: "blake",
             email: "blake@gmail.com",
-            password: "blake123",
+            password: await bcrypt.hash("blake123", 10),
             admin: true
         },
 
@@ -39,7 +39,7 @@ const main = async () => {
         data: {
             username: "elior",
             email: "elior@gmail.com",
-            password: "elior123",
+            password: await bcrypt.hash("elior123", 10),
             admin: true
         },
 
@@ -124,17 +124,17 @@ const main = async () => {
         }
     })
 
-    const orderFilled = await prisma.order.findUnique({
-        where: { id: order1.id },
-        include: {
-            chimichangas: {
-                include: {
-                    ingredients: true
-                }
-            }
-        }
-    })
-    console.log(orderFilled)
+    // const orderFilled = await prisma.order.findUnique({
+    //     where: { id: order1.id },
+    //     include: {
+    //         chimichangas: {
+    //             include: {
+    //                 ingredients: true
+    //             }
+    //         }
+    //     }
+    // })
+    // console.log(orderFilled)
 }
 
 
