@@ -7,6 +7,7 @@ const prisma = new PrismaClient();
 const bcrypt = require('bcryptjs')
 const main = async () => {
 
+
     const user1 = await prisma.user.create({
         data: {
             username: "tommy",
@@ -16,6 +17,7 @@ const main = async () => {
         },
 
     })
+
     const user2 = await prisma.user.create({
         data: {
             username: "mike",
