@@ -21,7 +21,8 @@ router.post("/signIn", async (req, res) => {
         const passwordMatch = await bcrypt.compare(password, user.password)
 
         if (passwordMatch) {
-            res.send({ message: "User is signed in" });
+            const token = jwt.sign({ id: user.id }, process.env.JWT)
+            res.send({ token });
         } else {
             res.send({ message: "Invalid Login" });
         }
@@ -39,7 +40,9 @@ router.post("/register", async (req, res) => {
         });
 
         if (result) {
-            res.status(201).send(result);
+            const token = jwt.sign({ id: result.id }, process.env.JWT);
+
+            res.status(201).send({ token });
         } else {
             res.send({ message: "Could not add User" });
         }
