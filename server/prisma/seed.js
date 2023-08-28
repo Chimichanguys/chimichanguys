@@ -6,6 +6,10 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const bcrypt = require('bcryptjs')
 const main = async () => {
+    /* const userTommy = await prisma.user.findUnique({
+        where: { username: "tommy" },
+    });
+    if (!userTommy) { */
 
     const user1 = await prisma.user.create({
         data: {
@@ -16,6 +20,7 @@ const main = async () => {
         },
 
     })
+
     const user2 = await prisma.user.create({
         data: {
             username: "mike",

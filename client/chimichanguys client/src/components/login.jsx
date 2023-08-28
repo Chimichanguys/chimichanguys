@@ -16,43 +16,57 @@ const Login = () => {
       body: JSON.stringify({ username, password })
     });
 
-    const data = await response.json();
-
+    const data = await response;
+ 
     if (!response.ok) {
       throw new Error(data.message || 'Failed to login');
     }
 
     return data;
   };
+  
 
   const handleLogin = async (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
 
     try {
-      const data = await signInAPI(username, password);
-      if (data.success) { 
-        navigate('/dashboard'); 
-      }
+        const response = await signInAPI(username, password);
+        console.log("Server response:", `username: ${username}`); //message
+        if (response.ok) { 
+            console.log("Navigating to dashboard...");
+            navigate('/dashboard'); 
+        } else {
+            setError(response.message || 'Failed to login');
+        }
     } catch (error) {
-      setError(error.message);
+        setError(error.message);
     }
-  };
+};
 
   return (
     <div>
       <h1>Login</h1>
       {error && <div>{error}</div>}
+      
       <form onSubmit={handleLogin}>
         <div>
           <label>Username:</label>
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+          <input 
+            type="text" 
+            value={username} 
+            onChange={(e) => setUsername(e.target.value)} 
+          />
         </div>
         <div>
           <label>Password:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input 
+            type="password" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+          />
         </div>
         <div>
-          <button type="submit">Login</button>
+        <button type="button" onClick={handleLogin}>Login</button>
         </div>
       </form>
     </div>
