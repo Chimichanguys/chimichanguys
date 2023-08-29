@@ -1,47 +1,40 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({setToken}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const signInAPI = async (username, password) => {
-    const response = await fetch('http://localhost:8000/auth/signIn', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ username, password })
-    });
-
-    const data = await response;
- 
-    if (!response.ok) {
-      throw new Error(data.message || 'Failed to login');
-    }
-
-    return data;
-  };
-  
-
   const handleLogin = async (event) => {
     event.preventDefault();
 
     try {
-        const response = await signInAPI(username, password);
-        console.log("Server response:", `username: ${username}`); //message
-        if (response.ok) { 
-            console.log("Navigating to dashboard...");
-            navigate('/dashboard'); 
-        } else {
-            setError(response.message || 'Failed to login');
-        }
+      const response = await fetch('http://localhost:8000/auth/signIn', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      });
+
+      const data = await response.json();
+
+      if (data.token) {
+          localStorage.setItem('token', data.token);
+          console.log("Received token:", data.token);
+          setToken(data.token);
+          navigate('/dashboard'); 
+          console.log("Navigating to dashboard...");
+      } else {
+          setError(data.message || 'Failed to login');
+      }
+
     } catch (error) {
-        setError(error.message);
+        setError("Something went wrong.");
     }
-};
+  }
 
   return (
     <div>
@@ -66,7 +59,7 @@ const Login = () => {
           />
         </div>
         <div>
-        <button type="button" onClick={handleLogin}>Login</button>
+          <button type="submit">Login</button>
         </div>
       </form>
     </div>
