@@ -13,6 +13,21 @@ app.use(require("body-parser").json());
 app.use(require("morgan")("dev"));
 app.use(cors());
 
+app.use((req, res, next) => {
+    //Check if the authorization header is valid
+    const auth = req.headers.authorization;
+    const token = auth?.startsWith("Bearer ") ? auth.slice(7) : null;
+    try{
+      const { id } = jwt.verify(token, process.env.JWT);
+      req.userId = id;
+    }
+    catch{
+      req.userId = null;
+    }
+  
+    next();
+  });
+
 
 app.use(express.static(path.join(__dirname, "..", "client/dist")));
 
