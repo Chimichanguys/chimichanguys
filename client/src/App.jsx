@@ -6,12 +6,13 @@ import Register from "./components/Register";
 import "./App.css";
 
 const App = () => {
+  const [token, setToken] = useState('');
   return (
     <>
       <h1>Chimichanguys</h1>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={<Register setToken={setToken} />} />
         <Route path="/dashboard/*" element={<Dashboard />} />
       </Routes>
     </>
