@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-const Register = () => {
-  
+const Register = ({setToken}) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -9,16 +8,13 @@ const Register = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     const body = JSON.stringify({username, email, password});
-    console.log(`New User Registered!!
-      ${JSON.stringify(body)}
-    `);
     const response = await fetch('/auth/register', {
       method: 'POST',
       headers: {"Content-Type": "application/json"},
       body
     });
     const result = await response.json();
-    console.log(result);
+    await setToken(`Bearer ${result.token}`);
   }
 
   return (
