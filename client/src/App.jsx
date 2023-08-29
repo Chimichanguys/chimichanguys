@@ -8,7 +8,6 @@ import "./App.css";
 
 const App = () => {
   const [token, setToken] = useState('');
-
   return (
     <>
       <h1>Chimichanguys</h1>
