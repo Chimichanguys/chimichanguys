@@ -3,6 +3,7 @@ console.log('DATABASE_URL:', process.env.DATABASE_URL);
 const express = require('express');
 
 const app = express();
+//TODO maybe we don't need
 const cors = require('cors')
 const PORT = 8000;
 const jwt = require("jsonwebtoken");
@@ -11,6 +12,7 @@ const path = require("path");
 
 app.use(require("body-parser").json());
 app.use(require("morgan")("dev"));
+//TODO maybe we don't need
 app.use(cors());
 
 app.use((req, res, next) => {

@@ -11,7 +11,7 @@ const Login = ({setToken}) => {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8000/auth/signIn', {
+      const response = await fetch('/auth/signIn', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

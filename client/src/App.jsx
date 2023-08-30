@@ -10,6 +10,15 @@ import "./App.css";
 
 const App = () => {
   const [token, setToken] = useState('');
+  const [user, setUser] = useState();
+
+  //GET User when token is updated
+   useEffect(() =>{
+    //fetch user from /auth/me
+    // Send token on authorization header
+    // setUser(result.json())
+   }, [token]);
+
   return (
     <>
       <h1>Chimichanguys</h1>
@@ -23,8 +32,7 @@ const App = () => {
           path="/dashboard/*" 
           element={
             <AuthenticatedRoute token={token}>
-              <Dashboard />
-             
+              <Dashboard  />
             </AuthenticatedRoute>
           } 
         />

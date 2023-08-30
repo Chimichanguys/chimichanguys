@@ -9,7 +9,6 @@ router.get("/", (req, res) => {
 });
 
 
-
 //Checks if user is valid
 router.post("/signIn", async (req, res) => {
     const { username, password } = req.body;
@@ -49,6 +48,11 @@ router.post("/register", async (req, res) => {
     } catch (error) {
         res.send(error.message);
     }
+});
+
+router.get("/me", async (req, res) =>{
+  //TODO get the user if they are logged in
+  // use req.userID to get user from db and return it
 });
 
 module.exports = router;
