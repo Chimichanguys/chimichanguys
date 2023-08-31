@@ -1,15 +1,18 @@
 const router = require("express").Router();
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+const jwt = require("jsonwebtoken");
+const { requireUser } = require("./idRequired");
 
-router.put("/user/:userId", async (req, res) => {
-  const userId = Number(req.params.userId);
+router.put("/user", requireUser, async (req, res) => {
+  const userId = req.userId;
   const cartId = req.body.cartId;
+  console.log(cartId);
   await prisma.user.update({
     where: { id: userId },
     data: { cartId: cartId },
   });
-  res.send({ cartId, userId });
+  res.send({ cartId });
 });
 
 router.post('/create', async (req, res) => {
@@ -36,17 +39,17 @@ router.post('/create', async (req, res) => {
 })
 
 
-prisma.order.findUnique({
-  where: {id: Number(req.params.id)},
-  include: {chimichangas: true}
-})
+// prisma.order.findUnique({
+//   where: {id: Number(req.params.id)},
+//   include: {chimichangas: true}
+// })
 
-prisma.order.findUnique({
-  where: {id: Number(req.params.id)},
-  include: {chimichangas: {
-    include: {ingredients: true}
-  }}
-})
+// prisma.order.findUnique({
+//   where: {id: Number(req.params.id)},
+//   include: {chimichangas: {
+//     include: {ingredients: true}
+//   }}
+// })
 
 
 module.exports = router;
