@@ -1,11 +1,15 @@
-
+import  Ingredients  from './Ingredients'
 import { Navigate } from 'react-router-dom';
 
-const AuthenticatedRoute = ({ token, children }) => {
-
+const AuthenticatedRoute = (props) => {
+const token = props.token
 
     if (token) {
-        return children;
+        return (
+            <>
+                   <Ingredients token= { token } />
+            </>
+        );
         
     }else{
         return <Navigate to="/" />;

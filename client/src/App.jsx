@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "./components/login";
-import Dashboard from "./components/dashboard";
+
 import Register from "./components/Register";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import { useState } from 'react';
@@ -15,12 +15,10 @@ const App = () => {
         <Route path="/" element={<Login setToken={setToken} />} /> 
         <Route path="/register" element={<Register />} />
         <Route 
-          path="/dashboard/*" 
+          path="/ingredients/*" 
           element={
-            <AuthenticatedRoute token={token}>
-              <Dashboard />
-            </AuthenticatedRoute>
-          } 
+            <AuthenticatedRoute token={token} />
+           } 
         />
       </Routes>
     </>
