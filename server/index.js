@@ -44,6 +44,14 @@ app.get("/register", (req, res) => {
 app.use("/api", require("./api"));
 app.use("/auth", require("./auth"));
 
+app.post('/api/saveDeliveryDetails', (req, res) => {
+  
+  console.log(req.body);
+
+  
+  res.json({ message: 'Details saved successfully' });
+});
+
 app.listen(PORT, (err) => {
     if (!err){
         console.log(`listening on PORT ${PORT}` )
