@@ -4,6 +4,7 @@ const prisma = new PrismaClient();
 const jwt = require("jsonwebtoken");
 const { requireUser } = require("./idRequired");
 
+/* might delete */
 router.put("/user", requireUser, async (req, res) => {
   const userId = req.userId;
   const cartId = req.body.cartId;
@@ -14,6 +15,13 @@ router.put("/user", requireUser, async (req, res) => {
   res.status(200).send({ cartId });
 });
 
+/* 
+Authorization required
+example body:
+  {
+      "ingredients": [1,2, 4, 5, 6]
+  }
+*/
 router.post("/", requireUser, async (req, res) => {
   const userId = req.userId;
   const ingredients = req.body.ingredients;
@@ -23,15 +31,27 @@ router.post("/", requireUser, async (req, res) => {
   });
 
   if (cartId) {
-    // TODO: if userId has a cartId, add a chimichanga to the cart
+    const newOrder = await prisma.order.update({
+      where: {id: cartId},
+      data: {
+        chimichangas: {
+          create: {
+            ingredients: {
+              connect: ingredients.map((ingredientId) => {
+                {id: ingredientId}
+              }),
+            },
+          },
+        }
+      }
+    });
+    res.send({cart: newOrder, chimichangas: newOrder.chimichangas, message: "Added chimichanga to cart!"})
   } else if (cartId === null) {
-    // TODO: if user does not have a cart, create a cart & add cartId to User table & add the chimichanga to the order
     const newOrder = await prisma.order.create({
       data: {
         userId,
         chimichangas: {
           create: {
-            // orderId: cartId,
             ingredients: {
               connect: ingredients.map((ingredientId) => {
                 {id: ingredientId}
@@ -45,7 +65,7 @@ router.post("/", requireUser, async (req, res) => {
       where: { id: userId },
       data: { cartId: newOrder.id },
     });
-    res.send(`Cart Updated: ${newOrder}`);
+    res.send({cart: newOrder, chimichangas: newOrder.chimichangas, message: "Created new cart & added a chimchanga!"});
   }
 
   router.delete("/", requireUser, async (req, res) => {
@@ -56,19 +76,13 @@ router.post("/", requireUser, async (req, res) => {
       where: { id: userId },
     });
     // TODO: ability to delete a chimichanga from cart
-    res.send({ message: "chimicahnga deleted!" });
+    res.send({ message: "chimichanga deleted!" });
   });
 
-  // prisma.order.findUnique({
-  //   where: {id: Number(req.params.id)},
-  //   include: {chimichangas: true}
-  // })
-
-  // prisma.order.findUnique({
-  //   where: {id: Number(req.params.id)},
-  //   include: {chimichangas: {
-  //     include: {ingredients: true}
-  //   }}
+  router.get('/', (req, res) => {
+    // TODO: get endpoint for all cart data
+    res.send('get cart');
+  })
 });
 
 module.exports = router;
