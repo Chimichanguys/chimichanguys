@@ -3,8 +3,6 @@ import { useState, useEffect } from 'react';
 const OrderHistory = () => {
     
     const userIdFromLocalStorage = localStorage.getItem('userId');
-
-
     const [userId, setUserId] = useState(userIdFromLocalStorage);
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -12,9 +10,7 @@ const OrderHistory = () => {
     useEffect(() => {
         const fetchOrderHistory = async () => {
             try {
-                const response = await fetch(`/api/orderHistory/${userId}`, 
-);
-
+                const response = await fetch(`/api/orderHistory/${userId}`);
                 const data = await response.json();
                 setOrders(data);
                 setLoading(false);
@@ -36,7 +32,7 @@ const OrderHistory = () => {
                     {orders.map(order => (
                         <li key={order.id}> 
                             Total Price: ${order.totalPrice} - 
-                            Address: {order.deliveryAddress}
+                            Address: {order.address}
                         </li>
                     ))}
                 </ul>

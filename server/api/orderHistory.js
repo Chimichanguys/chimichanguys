@@ -10,7 +10,7 @@ router.post('/orderhistory', async (req, res) => {
         const order = await prisma.order.create({
             data: {
                 ...deliveryDetails,
-                userId: req.userId // assuming you have user's ID saved in req.userId
+                userId: req.userId
             }
         });
         res.json(order);
@@ -25,14 +25,13 @@ router.get('/:userId', async (req, res) => {
         const orders = await prisma.order.findMany({
             where: {
                 userId: Number(userId)
-            },
-          
+            }
 
         });
         res.json(orders);
     } catch (error) {
-        console.error("Error fetching order history:", error)
-        res.status(500).json({ error: 'Failed to fetch order history' });
+        console.error("Error fetching order history:", error);
+        res.status(500).json({ message: 'Internal Server Error', error: error.message });
     }
 });
 
