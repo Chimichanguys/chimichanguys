@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "./components/login";
-import Dashboard from "./components/dashboard";
+
 import Register from "./components/Register";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import DeliveryDetails from "./components/deliveryDetails";
@@ -22,12 +22,10 @@ const App = () => {
         <Route path="/loadingPage/:choice" element={<LoadingPage />} />
         <Route path="/orderhistory" element={<OrderHistory />} />
         <Route 
-          path="/dashboard/*" 
+          path="/ingredients/*" 
           element={
-            <AuthenticatedRoute token={token}>
-              <Dashboard />
-            </AuthenticatedRoute>
-          } 
+            <AuthenticatedRoute token={token} />
+           } 
         />
       </Routes>
     </>
