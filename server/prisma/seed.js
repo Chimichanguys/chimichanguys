@@ -50,7 +50,7 @@ const main = async () => {
     const ingredient1 = await prisma.ingredient.create({
         data: {
             name: "Chicken",
-            calories: 700,
+            calories: 400,
             price: 10,
             imageUrl: "picture of chicken",
             type: "protein"
@@ -59,7 +59,7 @@ const main = async () => {
     const ingredient2 = await prisma.ingredient.create({
         data: {
             name: "steak",
-            calories: 800,
+            calories: 500,
             price: 12,
             imageUrl: "picture of steak",
             type: "protein"
@@ -84,6 +84,51 @@ const main = async () => {
         }
     });
 
+    const ingredient5 = await prisma.ingredient.create({
+        data: {
+            name: "Pico De Gallo",
+            calories: 100,
+            price: 0,
+            imageUrl: "picture of pico",
+            type: "extra"
+        }
+    });
+    const ingredient6 = await prisma.ingredient.create({
+        data: {
+            name: "Guacamole",
+            calories: 200,
+            price: 2,
+            imageUrl: "picture of guac",
+            type: "extra"
+        }
+    });
+    const ingredient7 = await prisma.ingredient.create({
+        data: {
+            name: "Queso",
+            calories: 150,
+            price: 1.00,
+            imageUrl: "picture of Queso",
+            type: "extra"
+        }
+    });
+    const ingredient8 = await prisma.ingredient.create({
+        data: {
+            name: "Mild Salsa",
+            calories: 50,
+            price: 0,
+            imageUrl: "picture of salsa",
+            type: "extra"
+        }
+    });
+    const ingredient9 = await prisma.ingredient.create({
+        data: {
+            name: "Lettuce",
+            calories: 50,
+            price: 0,
+            imageUrl: "picture of lettuce",
+            type: "extra"
+        }
+    });
 
     const order1 = await prisma.order.create({
         data: {
