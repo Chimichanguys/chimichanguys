@@ -11,7 +11,7 @@ const Login = ({setToken}) => {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8000/auth/signIn', {
+      const response = await fetch('/auth/signIn', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -25,7 +25,7 @@ const Login = ({setToken}) => {
           localStorage.setItem('token', data.token);
           console.log("Received token:", data.token);
           setToken(data.token);
-          navigate('/dashboard'); 
+          navigate('/ingredients'); 
           console.log("Navigating to dashboard...");
       } else {
           setError(data.message || 'Failed to login');

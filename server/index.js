@@ -31,12 +31,26 @@ app.use((req, res, next) => {
 
 app.use(express.static(path.join(__dirname, "..", "client/dist")));
 
-app.get("*", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "client/dist/index.html"));
 });
 
+app.get("/register", (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "client/dist/index.html"));
+  });
+
+
+
 app.use("/api", require("./api"));
 app.use("/auth", require("./auth"));
+
+app.post('/api/saveDeliveryDetails', (req, res) => {
+  
+  console.log(req.body);
+
+  
+  res.json({ message: 'Details saved successfully' });
+});
 
 app.listen(PORT, (err) => {
     if (!err){
