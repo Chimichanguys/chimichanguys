@@ -24,10 +24,28 @@ router.post("/", requireUser, async (req, res) => {
 
   if (cartId) {
     // TODO: if userId has a cartId, add a chimichanga to the cart
-    res.send(`Cart Id: ${cartId}`);
   } else if (cartId === null) {
     // TODO: if user does not have a cart, create a cart & add cartId to User table & add the chimichanga to the order
-    res.send("no cart id");
+    const newOrder = await prisma.order.create({
+      data: {
+        userId,
+        chimichangas: {
+          create: {
+            // orderId: cartId,
+            ingredients: {
+              connect: ingredients.map((ingredientId) => {
+                {id: ingredientId}
+              }),
+            },
+          },
+        },
+      },
+    });
+    await prisma.user.update({
+      where: { id: userId },
+      data: { cartId: newOrder.id },
+    });
+    res.send(`Cart Updated: ${newOrder}`);
   }
 
   router.delete("/", requireUser, async (req, res) => {
@@ -37,8 +55,8 @@ router.post("/", requireUser, async (req, res) => {
       select: { cartId: true },
       where: { id: userId },
     });
-  // TODO: ability to delete a chimichanga from cart
-  res.send({message: 'chimicahnga deleted!'});
+    // TODO: ability to delete a chimichanga from cart
+    res.send({ message: "chimicahnga deleted!" });
   });
 
   // prisma.order.findUnique({
