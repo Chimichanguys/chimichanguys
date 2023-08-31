@@ -18,11 +18,13 @@ app.use((req, res, next) => {
     const auth = req.headers.authorization;
     const token = auth?.startsWith("Bearer ") ? auth.slice(7) : null;
     try{
-      const { id } = jwt.verify(token, process.env.JWT);
-      req.userId = id;
+      const decodedToken = jwt.verify(token, process.env.JWT);
+      req.userId = decodedToken.id;
+      req.admin = decodedToken.admin || false;
     }
     catch{
       req.userId = null;
+      req.admin = false;
     }
   
     next();
