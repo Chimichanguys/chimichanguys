@@ -8,6 +8,8 @@ const PORT = 8000;
 const jwt = require("jsonwebtoken");
 const path = require("path");
 
+const orderHistory = require('./api/orderHistory');
+app.use('/api/orderHistory', orderHistory);
 
 app.use(require("body-parser").json());
 app.use(require("morgan")("dev"));
@@ -35,6 +37,7 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "client/dist/index.html"));
 });
 
+
 app.use("/api", require("./api"));
 app.use("/auth", require("./auth"));
 
@@ -45,6 +48,7 @@ app.post('/api/saveDeliveryDetails', (req, res) => {
   
   res.json({ message: 'Details saved successfully' });
 });
+
 
 app.listen(PORT, (err) => {
     if (!err){

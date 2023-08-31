@@ -22,7 +22,7 @@ router.post("/signIn", async (req, res) => {
 
         if (passwordMatch) {
             const token = jwt.sign({ id: user.id }, process.env.JWT)
-            res.send({ token });
+            res.send({ token, userId: user.id });
         } else {
             res.send({ message: "Invalid Login" });
         }

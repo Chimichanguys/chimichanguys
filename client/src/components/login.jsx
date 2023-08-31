@@ -23,7 +23,9 @@ const Login = ({setToken}) => {
 
       if (data.token) {
           localStorage.setItem('token', data.token);
+          localStorage.setItem('userId', data.userId);
           console.log("Received token:", data.token);
+          console.log("Received userId:", data.userId);
           setToken(data.token);
           navigate('/dashboard'); 
           console.log("Navigating to dashboard...");
