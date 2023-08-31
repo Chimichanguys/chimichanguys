@@ -40,6 +40,7 @@ const Ingredients = ({ token }) => {
     const totalPrice = selectedIngredients.reduce((total, ingredient) => total + parseFloat(ingredient.price), 0)
     return (
         <>
+  
             <h1>hello</h1>
             <h1>Here are your current choices for Chimichanga Fillings!</h1>
             {selectedIngredients.map((ingredient) => {

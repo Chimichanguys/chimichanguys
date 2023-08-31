@@ -132,13 +132,18 @@ const main = async () => {
 
     const order1 = await prisma.order.create({
         data: {
-            userId: user1.id
+            userId: user1.id,
+            name: "" ,
+            address: ""
+      
         }
     });
 
     const order2 = await prisma.order.create({
         data: {
-            userId: user3.id
+            userId: user3.id,
+            name: "" ,
+            address: ""
         }
     });
 

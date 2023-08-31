@@ -7,9 +7,16 @@ const cors = require('cors')
 const PORT = 8000;
 const jwt = require("jsonwebtoken");
 const path = require("path");
-
-
+app.use(cors({ origin: 'http://localhost:5173' }))
 app.use(require("body-parser").json());
+
+const saveDeliveryDetails = require('./api/saveDeliveryDetails');
+app.use('/api', saveDeliveryDetails);
+
+const orderHistory = require('./api/orderHistory');
+app.use('/api/orderHistory', orderHistory);
+
+
 app.use(require("morgan")("dev"));
 app.use(cors());
 
@@ -44,13 +51,14 @@ app.get("/register", (req, res) => {
 app.use("/api", require("./api"));
 app.use("/auth", require("./auth"));
 
-app.post('/api/saveDeliveryDetails', (req, res) => {
+app.post('/saveDeliveryDetails', (req, res) => {
   
   console.log(req.body);
 
   
   res.json({ message: 'Details saved successfully' });
 });
+
 
 app.listen(PORT, (err) => {
     if (!err){

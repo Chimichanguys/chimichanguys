@@ -44,5 +44,7 @@ model Order {
   userId       Int
   user         User          @relation("userOrders", fields: [userId], references: [id])
   userCart     User?         @relation("userCart")
+  name         String
+  address      String
 }
 
