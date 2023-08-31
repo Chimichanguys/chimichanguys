@@ -12,44 +12,35 @@ router.put("/user", requireUser, async (req, res) => {
     where: { id: userId },
     data: { cartId: cartId },
   });
-  res.send({ cartId });
+  res.status(200).send({ cartId });
 });
 
-router.post('/create', async (req, res) => {
-  try {
-    const token = req.headers.authentication;
-    // const userId = req.body.userId;
-    const userId = req.userId;
-    const chimichangas = req.body.chimichangaIds;
-    
-    if (token) {
-      const newPost = await prisma.order.create({
-        data: {
-          userId,
-          chimichangas
-        },
-      });
-      res.send(newPost);
-    } else {
-      res.status(401).send("invalid authentication!");
-    }
-  } catch (err) {
-    console.error(err);
+router.post("/", requireUser, async (req, res) => {
+  const userId = req.userId;
+  const ingredients = req.body.ingredients;
+  const { cartId } = await prisma.user.findUnique({
+    select: { cartId: true },
+    where: { id: userId },
+  });
+
+  if (cartId) {
+    // TODO: if userId has a cartId, add a chimichanga to the cart
+    res.send(`Cart Id: ${cartId}`);
+  } else if (cartId === null) {
+    // TODO: if user does not have a cart, create a cart & add cartId to User table
+    res.send("no cart id");
   }
-})
 
+  // prisma.order.findUnique({
+  //   where: {id: Number(req.params.id)},
+  //   include: {chimichangas: true}
+  // })
 
-// prisma.order.findUnique({
-//   where: {id: Number(req.params.id)},
-//   include: {chimichangas: true}
-// })
-
-// prisma.order.findUnique({
-//   where: {id: Number(req.params.id)},
-//   include: {chimichangas: {
-//     include: {ingredients: true}
-//   }}
-// })
-
+  // prisma.order.findUnique({
+  //   where: {id: Number(req.params.id)},
+  //   include: {chimichangas: {
+  //     include: {ingredients: true}
+  //   }}
+});
 
 module.exports = router;
