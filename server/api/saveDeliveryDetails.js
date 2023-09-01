@@ -13,7 +13,9 @@ router.post('/saveDeliveryDetails', async (req, res) => {
             
                 name: data.name,
                 address: data.address,
-                userId: Number(data.userId)
+                userId: Number(data.userId),
+                totalPrice: data.totalPrice 
+
           
             } 
         });

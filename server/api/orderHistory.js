@@ -7,6 +7,16 @@ const router = express.Router();
 router.post('/orderhistory', async (req, res) => {
     const deliveryDetails = req.body;
     try {
+        const ingredient = await prisma.ingredient.findUnique({
+            where: {
+                id: deliveryDetails.ingredientId
+            }
+        });
+
+        if (!ingredient) {
+            res.status(400).json({ message: "Ingredient not found" });
+            return;
+        }
         const order = await prisma.order.create({
             data: {
                 ...deliveryDetails,
@@ -25,6 +35,13 @@ router.get('/:userId', async (req, res) => {
         const orders = await prisma.order.findMany({
             where: {
                 userId: Number(userId)
+            },
+            include: {
+                chimichangas: {
+                    include: {
+                        ingredients: true
+                    }
+                }
             }
 
         });

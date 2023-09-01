@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useCart } from './useCart';
 
 const DeliveryDetails = () => {
     const [option, setOption] = useState("delivery");
@@ -9,6 +10,7 @@ const DeliveryDetails = () => {
     const [address, setAddress] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const { cartItems } = useCart();
 
     const handleOptionChange = (e) => {
         const selectedOption = e.target.value;
@@ -18,38 +20,42 @@ const DeliveryDetails = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
-     
+    
+        const initialTotalPrice = cartItems[0]?.price || 0; // Assuming only one ingredient is added at a time
+    
         let data = {};
         if (option === "delivery") {
-            data = { name, address, userId};
+            data = { name, address, userId };
         } else {
-            data = { name, address:"", userId};
+            data = { name, address: "", userId };
         }
-
+    
         try {
-            console.log(JSON.stringify(data))
             const response = await fetch('/api/saveDeliveryDetails', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify({
+                    name: data.name,
+                    address: data.address,
+                    userId: userId,
+                    totalPrice: initialTotalPrice
+                })
             });
-
+    
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-
+    
             const resultData = await response.json();
-            console.log(resultData);
-
             
             const estimatedTime = option === 'delivery' ? '30 mins' : '15 mins';
-            alert(`Your ${option} will be ready in approximately ${estimatedTime}.`);
-
+            alert(`Your ${option} will be ready in approximately ${estimatedTime}. Your total is: $${resultData.order.totalPrice}`);
+    
             const path = `/loadingPage/${option}`;
             navigate(path);
-
+    
         } catch (error) {
             setLoading(false);
             console.error(error);

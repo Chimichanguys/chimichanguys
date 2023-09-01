@@ -79,10 +79,19 @@ router.post("/", requireUser, async (req, res) => {
     res.send({ message: "chimichanga deleted!" });
   });
 
-  router.get('/', (req, res) => {
-    // TODO: get endpoint for all cart data
-    res.send('get cart');
-  })
+  router.get('/', requireUser, async (req, res) => {
+    try {
+        const userId = req.userId;
+        const userCart = await prisma.user.findUnique({
+            where: { id: userId },
+            include: { cart: { include: { chimichangas: { include: { ingredients: true } } } } }
+        });
+        res.json(userCart.cart.chimichangas || []);
+    } catch (error) {
+        console.error("Error fetching cart items:", error);
+        res.status(500).json({ message: 'Internal Server Error', error: error.message });
+    }
+});
 });
 
 module.exports = router;
