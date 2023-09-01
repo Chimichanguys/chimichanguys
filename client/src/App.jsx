@@ -1,12 +1,13 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "./components/login";
-
+import { CartProvider } from './components/useCart';
 import Register from "./components/Register";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import DeliveryDetails from "./components/deliveryDetails";
 import LoadingPage from "./components/loadingPage";
 import OrderHistory from "./components/OrderHistory";
 import NavBar from "./components/NavBar";
+import Cart from "./components/Cart";
 import { useState } from 'react';
 import "./App.css";
 import Cart from "./components/Cart";

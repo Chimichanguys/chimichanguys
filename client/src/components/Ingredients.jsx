@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, Routes, Route } from "react-router-dom"
 import AddIngredient from "./AddIngredient";
+import { useCart } from './useCart'
+
+
+
 
 
 const Ingredients = ({ token, admin }) => {
-
+    const { cartItems, setCartItems } = useCart();
     const [ingredients, setIngredients] = useState([]);
     const [selectedIngredients, setSelectedIngredients] = useState([])
     // const [buttonVisible, setButtonVisible] = useState(true);
@@ -23,17 +27,22 @@ const Ingredients = ({ token, admin }) => {
     }, []);
 
     const handleAddIngredient = (ingredient) => {
-        const prevIngredient = selectedIngredients;
-        setSelectedIngredients([...prevIngredient, ingredient])
-        //TODO: send "selectedIngredients array to the chimichangas/order database"
-        // setButtonVisible(false)
-        console.log(selectedIngredients)
+        // Update selected ingredients
+        const updatedIngredients = [...selectedIngredients, ingredient];
+        setSelectedIngredients(updatedIngredients);
+        
+        // Also update the cart items
+        setCartItems(updatedIngredients);
     }
+    
     const deleteIngredient = (ingredientId) => {
-        setSelectedIngredients(prevIngredients => prevIngredients.filter(ingredient => ingredient.id !== ingredientId))
-        console.log(selectedIngredients)
-        // setButtonVisible(true)
-
+        const updatedIngredients = selectedIngredients.filter(ingredient => ingredient.id !== ingredientId);
+        
+        // Update selected ingredients
+        setSelectedIngredients(updatedIngredients);
+    
+        // Also update the cart items
+        setCartItems(updatedIngredients);
     }
 
 

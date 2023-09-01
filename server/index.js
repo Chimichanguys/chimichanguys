@@ -36,7 +36,27 @@ app.use((req, res, next) => {
   
     next();
   });
+  app.post('/checkout', async (req, res) => {
+    try {
+        
+        const { totalPrice } = req.body;
+        const userId = req.session.userId; 
+        const user = await prisma.user.findUnique({ where: { id: userId }, select: { cartId: true } });
 
+        if (!user.cartId) {
+            return res.status(400).send("User does not have an active cart");
+        }
+        await prisma.order.update({
+            where: { id: user.cartId },
+            data: { totalPrice }
+        });
+
+        res.status(200).send("Checkout successful!");
+    } catch (error) {
+        console.error("Error during checkout:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
 
 app.use(express.static(path.join(__dirname, "..", "client/dist")));
 

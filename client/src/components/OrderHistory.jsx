@@ -18,10 +18,11 @@ const OrderHistory = () => {
                 console.error("Failed to fetch order history:", error);
                 setLoading(false);
             }
-        };
+        }
 
         fetchOrderHistory();
     }, [userId]);
+
     return (
         <div>
             <h2>Order History</h2>
@@ -42,7 +43,3 @@ const OrderHistory = () => {
 }
 
 export default OrderHistory;
-
-
-
-

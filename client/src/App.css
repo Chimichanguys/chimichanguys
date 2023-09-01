@@ -11,7 +11,7 @@ nav {
 nav ul {
     display: flex;
     justify-content: flex-end;
-    butLast-of-type: right;
+    
     flex: 1;
 }
 #homelink{
