@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, Routes, Route } from "react-router-dom"
+import AddIngredient from "./AddIngredient";
 
 
-const Ingredients = ({ token }) => {
+const Ingredients = ({ token, admin }) => {
 
     const [ingredients, setIngredients] = useState([]);
     const [selectedIngredients, setSelectedIngredients] = useState([])
@@ -40,8 +41,7 @@ const Ingredients = ({ token }) => {
     const totalPrice = selectedIngredients.reduce((total, ingredient) => total + parseFloat(ingredient.price), 0)
     return (
         <>
-  
-            <h1>hello</h1>
+            {admin ? ( <AddIngredient token={token}/>) : (<p>Welcome Customer!</p>)}
             <h1>Here are your current choices for Chimichanga Fillings!</h1>
             {selectedIngredients.map((ingredient) => {
                 return (

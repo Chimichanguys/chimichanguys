@@ -9,15 +9,18 @@ import OrderHistory from "./components/OrderHistory";
 import NavBar from "./components/NavBar";
 import { useState } from 'react';
 import "./App.css";
+import Cart from "./components/Cart";
 
 const App = () => {
   const [token, setToken] = useState('');
+  const [admin, setAdmin] = useState(false)
+
   return (
     <>
       <h1>Chimichanguys</h1>
       <NavBar/>
       <Routes>
-        <Route path="/" element={<Login setToken={setToken} />} /> 
+        <Route path="/" element={<Login setToken={setToken} setAdmin={setAdmin}/>} /> 
         <Route path="/register" element={<Register />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/delivery" element={<DeliveryDetails />} />
@@ -27,7 +30,7 @@ const App = () => {
         <Route 
           path="/ingredients/*" 
           element={
-            <AuthenticatedRoute token={token} />
+            <AuthenticatedRoute token={token} admin={admin} />
            } 
            
         />

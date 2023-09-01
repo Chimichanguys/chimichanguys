@@ -4,11 +4,12 @@ import { Navigate } from 'react-router-dom';
 
 const AuthenticatedRoute = (props) => {
 const token = props.token
+const admin = props.admin
 
     if (token) {
         return (
             <>
-                   <Ingredients token= { token } />
+                   <Ingredients token= { token } admin={ admin }/>
             </>
         );
         
