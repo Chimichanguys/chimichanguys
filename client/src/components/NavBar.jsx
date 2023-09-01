@@ -10,7 +10,7 @@ const NavBar = () => {
             <ul>
                 <Link id="homelink" to="/ingredients"><HomeIcon/>Home</Link>
                 <Link id="orderhistorylink" to="/OrderHistory"><HistoryIcon/>Order History</Link>
-                <Link id="cartlink" to="/Cart"><ShoppingCartIcon/>Cart</Link>
+                <Link id="cartlink" to="/cart"><ShoppingCartIcon/>Cart</Link>
             </ul>
         </nav>
     );

@@ -46,5 +46,6 @@ model Order {
   userCart     User?         @relation("userCart")
   name         String
   address      String
+  totalPrice   Decimal       @default(0)
 }
 
