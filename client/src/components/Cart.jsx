@@ -3,6 +3,7 @@ import { useCart } from './useCart';
 import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
+  const token = localStorage.getItem("token");
   const { cartItems, setCartItems } = useCart();
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState([]);
@@ -64,6 +65,22 @@ const Cart = () => {
     return <p>Loading...</p>
   }
 
+  const orderHandler = async () => {
+    const ingredientIds = cartItems.map((item) => {return item.id});
+    console.log(token);
+    const response = await fetch('/api/cart', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({ingredients: ingredientIds})
+    });
+    const result = await response.json();
+    console.log(result);
+    navigate('/delivery');
+  }
+
   return (
     <div className="cart">
       <h2>Your Cart</h2>
@@ -76,7 +93,7 @@ const Cart = () => {
         ))}
       </ul>
       <h3>Total: ${getTotalPrice()}</h3>
-      <button onClick={() => navigate('/delivery')}>Check Out</button> {/* Check Out button */}
+      <button onClick={orderHandler}>Check Out</button> {/* Check Out button */}
     </div>
   );
 }
