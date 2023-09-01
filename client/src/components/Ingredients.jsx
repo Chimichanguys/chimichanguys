@@ -8,7 +8,7 @@ import { useCart } from './useCart'
 
 
 const Ingredients = ({ token, admin }) => {
-    const { cartItems, setCartItems } = useCart();
+    // const { cartItems, setCartItems } = useCart();
     const [ingredients, setIngredients] = useState([]);
     const [selectedIngredients, setSelectedIngredients] = useState([])
     // const [buttonVisible, setButtonVisible] = useState(true);

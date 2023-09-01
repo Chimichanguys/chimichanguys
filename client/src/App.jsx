@@ -10,7 +10,7 @@ import NavBar from "./components/NavBar";
 import Cart from "./components/Cart";
 import { useState } from 'react';
 import "./App.css";
-import Cart from "./components/Cart";
+
 
 const App = () => {
   const [token, setToken] = useState('');
