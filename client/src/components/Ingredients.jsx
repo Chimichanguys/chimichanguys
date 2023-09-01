@@ -54,7 +54,7 @@ const Ingredients = ({ token }) => {
                     <>
                         <h3>{ingredient.name}</h3>
                         <p>{ingredient.calories}</p>
-                        {/* <button onClick={<Cart ingredients={ingredients} />}>Proceed to Checkout</button> */}
+                        {/* <button onClick={<Cart selectedIngredients={selectedIngredients} />}>Proceed to Checkout</button> */}
                     </>
                 )
             })}

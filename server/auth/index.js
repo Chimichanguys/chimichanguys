@@ -9,25 +9,34 @@ router.get("/", (req, res) => {
 });
 
 
-
-//Checks if user is valid
 router.post("/signIn", async (req, res) => {
     const { username, password } = req.body;
 
     const user = await prisma.user.findUnique({
         where: { username: username },
     });
+
     if (user) {
-        const passwordMatch = await bcrypt.compare(password, user.password)
+        const passwordMatch = await bcrypt.compare(password, user.password);
 
         if (passwordMatch) {
-            const token = jwt.sign({ id: user.id }, process.env.JWT)
-            res.send({ token, userId: user.id });
+            const tokenPayload = {
+                id: user.id,
+                admin: user.admin, 
+            };
+
+            const token = jwt.sign(tokenPayload, process.env.JWT);
+            res.send({ token });
         } else {
             res.send({ message: "Invalid Login" });
         }
+    } else {
+        res.send({ message: "User not found" });
     }
 });
+
+
+
 
 router.post("/register", async (req, res) => {
     try {

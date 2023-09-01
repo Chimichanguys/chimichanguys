@@ -1,8 +1,19 @@
 const router = require("express").Router();
-const { requireUser } = require("./idRequired"); 
+const { requireUser, requireAdmin } = require("./idRequired"); 
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
+
+router.post("/", requireAdmin, async (req, res) => {
+    try{
+        const ingredient = await prisma.ingredient.create({
+            data: req.body,
+        });
+        res.send(ingredient);
+    }catch (error) {
+        res.send(error)
+    }
+})
 
 router.get("/", requireUser, async (req, res) => {
     try {
@@ -13,5 +24,7 @@ router.get("/", requireUser, async (req, res) => {
         res.send(error);
     }
 });
+
+
 
 module.exports = router;
