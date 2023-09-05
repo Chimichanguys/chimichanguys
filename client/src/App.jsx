@@ -10,7 +10,7 @@ import NavBar from "./components/NavBar";
 import Cart from "./components/Cart";
 import { useState } from 'react';
 import "./App.css";
-import  Ingredients  from './components/Ingredients'
+
 
 const App = () => {
   const [token, setToken] = useState('');
@@ -41,7 +41,6 @@ const App = () => {
               </Routes>
           </CartProvider>
       </>
-  );
-};
+
 
 export default App;
