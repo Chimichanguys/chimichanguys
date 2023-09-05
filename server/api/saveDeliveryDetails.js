@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/saveDeliveryDetails', async (req, res) => {
     const data = req.body;
-    console.log(req.body)
+    console.log(data)
     try {
         const savedOrder = await prisma.order.create({
             data: {
@@ -18,7 +18,7 @@ router.post('/saveDeliveryDetails', async (req, res) => {
 
           
             } 
-        });
+        })
 
         res.json({ message: 'Details saved successfully', order: savedOrder });
 

@@ -26,7 +26,9 @@ router.post("/signIn", async (req, res) => {
             };
 
             const token = jwt.sign(tokenPayload, process.env.JWT);
-            res.send({ token });
+           
+            res.send({ token, isAdmin: user.admin, userId: user.id }); // <-- Added userId here!
+            
         } else {
             res.send({ message: "Invalid Login" });
         }
@@ -34,7 +36,6 @@ router.post("/signIn", async (req, res) => {
         res.send({ message: "User not found" });
     }
 });
-
 
 
 

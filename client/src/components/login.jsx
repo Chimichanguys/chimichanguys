@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Login = ({setToken}) => {
+const Login = ({setToken, setAdmin}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -20,13 +20,17 @@ const Login = ({setToken}) => {
       });
 
       const data = await response.json();
+      console.log(data)
 
       if (data.token) {
           localStorage.setItem('token', data.token);
           localStorage.setItem('userId', data.userId);
+          localStorage.setItem('admin', data.isAdmin);
           console.log("Received token:", data.token);
           console.log("Received userId:", data.userId);
+          console.log("Received admin status:", data.isAdmin);
           setToken(data.token);
+          setAdmin(data.isAdmin)
           navigate('/ingredients'); 
           console.log("Navigating to dashboard...");
       } else {

@@ -14,6 +14,7 @@ import  Ingredients  from './components/Ingredients'
 
 const App = () => {
   const [token, setToken] = useState('');
+  const [admin, setAdmin]= useState(false);
 
   return (
       <>
@@ -21,7 +22,7 @@ const App = () => {
           <NavBar />
           <CartProvider>
               <Routes>
-                  <Route path="/" element={<Login setToken={setToken} />} />
+                  <Route path="/" element={<Login setToken={setToken} setAdmin={setAdmin}/>} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/delivery" element={<DeliveryDetails />} />
                   <Route path="/loadingPage" element={<LoadingPage />} />
@@ -29,7 +30,7 @@ const App = () => {
                   
                   {/* Routes that are nested inside AuthenticatedRoute!!!!!!! */}
                   <Route path="/ingredients/*" element={<AuthenticatedRoute token={token} />}>
-                      <Route index element={<Ingredients token={token} />} />
+                      <Route index element={<Ingredients token={token} admin={admin} />} />
                   </Route>
                   <Route path="/cart" element={<AuthenticatedRoute token={token} />}>
                       <Route index element={<Cart />} />
