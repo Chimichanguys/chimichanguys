@@ -7,11 +7,20 @@ import { Outlet } from 'react-router-dom';
 
 const AuthenticatedRoute = (props) => {
 const token = props.token
+const admin = props.admin
 
-if (!token) {
-    return <Navigate to="/" />;
-}
-return <Outlet />; // Outlet will render the nested route component.
+    if (token) {
+        return (
+            <>
+                   <Ingredients token= { token } admin={ admin }/>
+            </>
+        );
+        
+    }else{
+        return <Navigate to="/" />;
+    }
+
+    
 };
 
 export default AuthenticatedRoute;

@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, Routes, Route } from "react-router-dom"
+import AddIngredient from "./AddIngredient";
 import { useCart } from './useCart'
 
 
-const Ingredients = ({ token }) => {
-    const { cartItems, setCartItems } = useCart();
+
+
+
+const Ingredients = ({ token, admin }) => {
+    // const { cartItems, setCartItems } = useCart();
     const [ingredients, setIngredients] = useState([]);
     const [selectedIngredients, setSelectedIngredients] = useState([])
     // const [buttonVisible, setButtonVisible] = useState(true);
@@ -46,8 +50,7 @@ const Ingredients = ({ token }) => {
     const totalPrice = selectedIngredients.reduce((total, ingredient) => total + parseFloat(ingredient.price), 0)
     return (
         <>
-  
-            <h1>hello</h1>
+            {admin ? ( <AddIngredient token={token}/>) : (<p>Welcome Customer!</p>)}
             <h1>Here are your current choices for Chimichanga Fillings!</h1>
             {selectedIngredients.map((ingredient) => {
                 return (
