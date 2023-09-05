@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, Routes, Route } from "react-router-dom"
-import AddIngredient from "./AddIngredient";
 import { useCart } from './useCart'
-
-
-
+import AddIngredient from "./AddIngredient";
 
 
 const Ingredients = ({ token, admin }) => {
-    // const { cartItems, setCartItems } = useCart();
+    const { cartItems, setCartItems } = useCart();
     const [ingredients, setIngredients] = useState([]);
     const [selectedIngredients, setSelectedIngredients] = useState([])
     // const [buttonVisible, setButtonVisible] = useState(true);
